@@ -1,0 +1,143 @@
+{
+  "name": "smart-error-code-generator",
+  "displayName": "Smart Error Code Generator",
+  "description": "Generate error codes based on line and path",
+  "version": "1.0.1",
+  "icon": "assets/icon.png",
+  "author": "millennIumAMbiguity",
+  "publisher": "millennIumAMbiguity",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/millennIumAMbiguity/smart-error-code-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/millennIumAMbiguity/smart-error-code-generator/issues"
+  },
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "error",
+    "code",
+    "errorcode",
+    "debug",
+    "errorhandling"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": [
+      {
+        "title": "Error Code Generator",
+        "type": "object",
+        "properties": {
+          "smart-error-code-generator.pathLength": {
+            "type": "number",
+            "default": 3,
+            "description": "Length of the error code path."
+          },
+          "smart-error-code-generator.lineLength": {
+            "type": "number",
+            "default": 3,
+            "description": "Length of the error code line."
+          },
+          "smart-error-code-generator.pathFormat": {
+            "type": "string",
+            "enum": [
+              "decimal",
+              "hexadecimal",
+              "base36"
+            ],
+            "default": "hexadecimal",
+            "description": "Format of the error code path."
+          },
+          "smart-error-code-generator.lineFormat": {
+            "type": "string",
+            "enum": [
+              "decimal",
+              "hexadecimal",
+              "base36"
+            ],
+            "default": "hexadecimal",
+            "description": "Format of the error code line."
+          },
+          "smart-error-code-generator.format": {
+            "type": "string",
+            "default": "{path}{line}",
+            "description": "Format of the error code."
+          }
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "smart-error-code-generator.insert",
+        "title": "Generate and Insert Error Code",
+        "shortTitle": "Insert Error Code"
+      },
+      {
+        "command": "smart-error-code-generator.find",
+        "title": "Find Error Code"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "smart-error-code-generator.insert",
+        "key": "ctrl+f1",
+        "mac": "cmd+f1",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus",
+          "command": "smart-error-code-generator.insert",
+          "group": "smart-error-code-generator",
+          "order": 16
+        },
+        {
+          "when": "editorFocus",
+          "command": "smart-error-code-generator.find",
+          "group": "smart-error-code-generator",
+          "order": 16
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.97.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint": "^9.19.0",
+    "esbuild": "^0.24.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  },
+  "__metadata": {
+    "publisherDisplayName": "millennIumAMbiguity",
+    "publisherId": "a823917d-2ad8-4a2a-932d-0dca59bca974"
+  }
+}
