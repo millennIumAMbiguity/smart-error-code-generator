@@ -1,0 +1,35 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master # Run tests when pushing to the main branch
+  pull_request:
+    branches:
+      - master # Run tests on pull requests targeting the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Use the latest Ubuntu environment
+
+    steps:
+      # Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # Cache npm dependencies for faster builds
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Set up a virtual display using xvfb
+      - name: Run tests in virtual display
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm test # Run tests inside the virtual display
